@@ -1,4 +1,4 @@
 {
-  "rate": {"value": 178, "updated_at": "29/09/2023 23:55:22"},
-  "app_update": {"current_version": "0.5.3", "updated_at": "29/09/2023", "desc": "/0.5.0/description.md"}
+  "rate": {"value": 177, "updated_at": "30/09/2023 11:28:22"},
+  "app_update": {"current_version": "0.5.4", "updated_at": "30/09/2023", "desc": "/0.5.0/description.md"}
 }
