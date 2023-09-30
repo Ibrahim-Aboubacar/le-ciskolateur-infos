@@ -1,1 +1,417 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <link
+            rel="stylesheet"
+            href="style.css"
+        />
+        <style>
+            #start{
+                appearance: none;
+                -moz-appearance: textfield;
+            }
+        </style>
+        <title>Le Ciskolateur</title>
+    </head>
+    <body x-data="{
+        showInfos: false,
+        internetProblem: true,
+        showRate: true,
+        maj_disponible: false,
+        showMaj_disponible: true,
+        maj_disponible_version: '',
+        chargement: true,
+        chargementRefresh: false,
+        showCommands: false,
+        setting_url: 'raw.githubusercontent.com/Ibrahim-Aboubacar/le-ciskolateur-infos/main/latest/settings.js',
+        homePage_url: 'https:'+'/'+'/bit.ly/le-ciskolateur',
+        messageInvitation: '',
+        //setting_url: 'ibrahim-aboubacar.github.io/le-ciskolateur-infos/settings.js',
+        data : {
+            start: 0.0,
+            rate: 0,
+            rate_updated_at: '',
+            result: 0,
+            current : {left: 'CFA', right: 'GHS'},
+            original : {left: 'CFA', right: 'GHS'},
+            appInfos : {
+                version : '1.0.0 beta',
+                release_date: '30/09/2023',
+                description: '0.5.0/description.md'
+            },
+            incrementRate : function (){
+                $data.data.rate++
+                $data.data.update()
+                $data.vibrateSm();
+            },
+            decrementRate : function (){
+                $data.data.rate--;
+                $data.data.update()
+                $data.vibrateSm();
+            },
+            update : function () {
+                if($data.data.start * 1 == 0) $data.data.start = 0
+                if($data.data.start * 1 !== 0) $data.data.start = $data.data.start * 1
+                if($data.data.current.left == $data.data.original.left){
+                    $data.data.cfaToCedi()
+                } else if($data.data.current.left == $data.data.original.right) {
+                    $data.data.cediToCfa()
+                }
+            },
+            cfaToCedi : function () {
+                if(this.start * (this.rate / 10000) == NaN){
+                    this.result = 0;
+                } else {
+                    this.result = this.start * (this.rate / 10000);
+                }
+            },
+            cediToCfa: function () {
+                if(this.start / (this.rate / 10000) == NaN){
+                    this.result = 0;
+                } else {
+                    this.result = this.start / (this.rate / 10000);
+                }
+            }
+        },
+        openExternalLink : function (link) {
+            try {
+                Website2APK.openExternal(link);
+                var devId = Website2APK.getUniqueDeviceID();
+                alert(devId);
+            } catch {
+                let a = document.createElement('a')
+                a.href = link
+                a.target = '_blanck';
+                document.body.append(a)
+                a.click()
+                a.remove()
+            }
+        },
+        init: function () {
+            document.addEventListener('alpine:initialized', function () {
+                $data.messageInvitation = $data.encodeWhatsappMessage('Découvre *\'Le Ciskolateur*\',\n \n l\'appli ultime pour des conversions 💱 faciles entre le *Cedi ghanéen* et le *Franc CFA*.\n \nNe te trompe plus dans tes conversions ! \nÉconomise du temps et de l\'argent🤩. \nLe taux de change est *fourni* et *régulièrement mis à jour*.\n Télécharge-la ici : 👇👇\n => *'+ $data.homePage_url +'* et rejoins-nous maintenant 👌!')
+                $data.gobalInit();
+            })
+        },
+        vibrateSm : function (){
+            if ('vibrate' in navigator) {
+                // Vibrate for 1000 milliseconds (1 second)
+                navigator.vibrate(60);
+              } else {
+                // Vibration API is not supported
+                console.log('Vibration API is not supported in this browser.');
+              }
+        },
+        vibrateMd : function (){
+            if ('vibrate' in navigator) {
+                // Vibrate for 1000 milliseconds (1 second)
+                navigator.vibrate(100);
+              } else {
+                // Vibration API is not supported
+                console.log('Vibration API is not supported in this browser.');
+              }
+        },
+        encodeWhatsappMessage: function (mess){
+            return (mess.replace(/\n/g, '%0A')).replace(/ /g, '%20')
+        },
+        checkMaj : function (){
+            console.log('Recherche de mise à jour...')
+            if($data.getSettings().app_update.current_version != $data.data.appInfos.version){
+                //$data.maj_disponible = true;
+                console.log('Mise à jour disponible v'+$data.getSettings().app_update.current_version+' …')
+            } else {
+                console.log('Vous êtes à jour…')
+            }
+        },
+        reinitialiserTaux: function (){
+            $data.vibrateSm();
+            $data.showCommands = false;
+            if($data.getSettings()){
+                $data.data.rate = $data.getSettings().rate.value;
+                $data.data.rate_updated_at = $data.getSettings().rate.updated_at;
+                $data.data.update()
+            }
+        },
+        charge : function (){
+            $data.chargement = false;
+        },
+        gobalInit: function (){
+            $data.chargement = true;
+            $data.chargementRefresh = false;
+            if($data.getSettings()){
+                $data.maj_disponible = $data.getSettings().app_update.current_version != $data.data.appInfos.version;
+                $data.maj_disponible_version = $data.getSettings().app_update.current_version;
+                $data.data.rate = $data.getSettings().rate.value;
+                $data.data.rate_updated_at = $data.getSettings().rate.updated_at;
+            }
+            $data.showRate = true;
+            $data.fetchAndSetData();
+        },
+        fetchAndSetData: function (){
+            let timestamp = new Date().getTime();
+            fetch('https:'+'/'+'/'+$data.setting_url+'?timestamp='+timestamp)
+            .then(response => {
+                if (!response.ok) {
+                    $data.internetProblem = true;
+                    setTimeout(()=>{
+                        $data.internetProblem = false;
+                        alert('ici')
+                        $data.charge();
+                    }, 3000);
+                    throw new Error('Le fichier de configuratoin n\'a pas pu être récupéré.');
+                }
+            return response.json();
+            }).then((settings)=>{
+                $data.data.rate = settings.rate.value;
+                $data.setSettings(settings);
+                setTimeout(()=>{
+                    $data.charge();
+                    $data.internetProblem = false;
 
+                    $data.data.update();
+                    $data.chargementRefresh = true;
+                    $data.vibrateSm();
+                    setTimeout(()=>{
+                        $data.chargementRefresh = false;
+                    }, 2500);
+                    setTimeout(()=>{
+                        $data.checkMaj(); 
+                    },2000);
+                }, randomNumberInRange = 400 + Math.floor(Math.random() * (1500 - 400 + 1)));
+            }).catch((rej)=>{
+                console.error('rej: '+rej)
+                $data.charge();
+                $data.internetProblem = true;
+                    setTimeout(()=>{
+                        $data.internetProblem = false;
+                        $data.charge();
+                    }, 3000);
+            })
+        },
+        setSettings: function (set){
+            $data.data.rate = set.rate.value
+            $data.data.rate_updated_at = set.rate.updated_at
+            localStorage.setItem('settings', JSON.stringify(set))
+            return true;
+        },
+        getSettings: function (){
+            settings = localStorage.getItem('settings')
+            if(settings){
+                return JSON.parse(settings);
+            } else {
+                return false;
+            }
+        },
+        getAppSettings: function (){
+            return $data.appInfos;
+        },
+        swapCurency: function(){
+            if(this.data.current.left == this.data.original.right){
+                this.data.current.left = this.data.original.left
+                this.data.current.right = this.data.original.right
+            } else {
+                this.data.current.left = this.data.original.right
+                this.data.current.right = this.data.original.left
+            };
+            //this.data.start = this.data.result
+            $data.data.update();
+        },
+        swap : function(){
+            const lC = document.getElementById('leftCurrency'); 
+            const rC = document.getElementById('rightCurrency');
+            $data.vibrateSm();
+            setTimeout(()=>{
+                this.swapCurency()
+            },140)
+            lC.addEventListener('transitionend', (e)=>{
+                // on retire l'event
+                removeEventListener('transitionend',lC);
+                // on remet les classe initiales pour le leftCurency
+                lC.classList.remove('-translate-x-8');
+                lC.classList.add('-translate-x-32');
+                // on remet les classe initiales pour le rightCurency
+                rC.classList.remove('translate-x-8');
+                rC.classList.add('translate-x-32');
+            })
+            lC.classList.remove('-translate-x-32');
+            lC.classList.add('-translate-x-8');
+            rC.classList.remove('translate-x-32');
+            rC.classList.add('translate-x-8');
+        }
+    }" class="bg-gray-300 text-gray-800 dark:bg-gray-900 dark:text-gray-100 select-none">
+        <div class="py-4 mx-auto max-w-3xl text-center dark:bg-gray-800 bg-gray-400 bg-opacity-40 relative">
+            <div x-show="internetProblem" style="display: none;" class="absolute inset-0 flex justify-center items-center font-bold bg-red-600">
+                PROBLEME DE CONNECTION
+            </div>
+            <div x-show="chargement" class="absolute inset-0 flex justify-center items-center font-bold bg-orange-600">
+                CHARGEMENT...
+            </div>
+            <h1 class="font-bold">Le Ciskolateur</h1>
+            <div class="absolute top-1/2 -translate-y-1/2 right-16 p-2 cursor-pointer select-none" x-on:click="showRate = true" title="Current Rate">
+                <svg class="inline-block_ w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 7.756a4.5 4.5 0 100 8.488M7.5 10.5h5.25m-5.25 3h5.25M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <div class="absolute top-1/2 -translate-y-1/2 right-6 p-2 cursor-pointer select-none" x-on:click="showInfos = true" title="infos">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                  </svg>
+            </div>
+            <div x-show="maj_disponible && showMaj_disponible" class="absolute bg-green-500 text-white top-full -translate-y-1/3 right-6 px-2 py-1 inline-block text-xs" style="display: none;" x-on:click="showMaj_disponible = false" x-transition x-transition.duration.500ms>
+                <span class="bg-green-500_ absolute bottom-full right-4 h-2_ w-3_ inline-block" style="border-right : 6px solid transparent; border-bottom : 6px solid rgb(34 197 94 / var(--tw-bg-opacity)); border-left : 6px solid transparent;"></span>
+                Nouvelle mise à jour disponible (version <span x-text="$data.maj_disponible_version" class="font-bold"></span>)
+            </div>
+        </div>
+        <div id="swith" class="relative mx-auto max-w-3xl py-4 flex justify-center items-center group_">
+            <div x-on:click="swap" class="bg-orange-600 select-none flex justify-center items-center text-white p-4 rounded-full left-1/2 absolute_ -translate-x-1/2_" type="button" title="basculer la conversion" id="swither" >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+                  </svg>                  
+            </div>
+            <div id="leftCurrency" class="group-hover:-translate-x-8 rounded-md bg-gray-200 -z-10 dark:bg-gray-700  py-2 px-4 shadow-md inline absolute left-1/2 -translate-x-32 top-1/2 -translate-y-1/2 transition-all font-bold" x-text="data.current.left">...</div>
+            <div id="rightCurrency" class="group-hover:translate-x-8 rounded-md bg-gray-200 -z-10 dark:bg-gray-700  py-2 px-4 shadow-md inline absolute right-1/2 translate-x-32 top-1/2 -translate-y-1/2 transition-all font-bold" x-text="data.current.right">...</div>
+        </div>
+        <!-- </div> -->
+        <div class="px-6">
+            <div class="mx-5_ mx-auto max-w-3xl mt-3 px-5 pb-3 pt-4 rounded-md text-5xl text-right dark:bg-gray-800 bg-gray-200 relative">
+                <p id="result" x-text="(new Intl.NumberFormat('fr-FR').format(data.result.toFixed(2) ) )">0.0</p>
+                <p id="full_result" class="text-xs" x-text="(new Intl.NumberFormat('fr-FR').format(data.result))">0.0</p>
+                <span class="absolute top-0 -translate-y-1/2 right-2 text-sm px-2 transition-all py-1 rounded-md dark:bg-green-800 bg-green-500 text-white font-bold border-4 border-gray-300 dark:border-gray-900" id="to_currency" x-text="data.current.right"  x-on:click="$data.data.start = 0; data.update(); vibrateSm();">GHS</span>
+            </div>
+        </div>
+        <div class="px-5">
+            <div class="mx-5_ mx-auto max-w-3xl my-3 px-5 pb-3 pt-4 rounded-md text-2xl text-right dark:bg-gray-800 bg-gray-200 relative">
+                <label for="start" class="hidden">Input number</label>
+                <input class="inline bg-transparent w-full text-right appearance-none focus-visible:outline-none focus:border-current focus:ring-transparent focus:shadow-none"
+                type="number"
+                id="start"
+                x-model="data.start" x-on:keyup="data.update" x-on:change="data.update" autofocus tabindex="0">
+                <span class="absolute top-1/2 -translate-y-1/2  -left-2 text-sm px-2 transition-all py-1 rounded-md dark:bg-green-800 bg-green-500 text-white font-bold border-4 border-gray-300 dark:border-gray-900" 
+                id="from_currency" x-text="data.current.left" x-on:click="$data.data.start = 0; data.update(); vibrateSm();">CFA</span>
+                <p class="absolute top-full text-xs text-gray-500 left-1" x-text="'Veuillez entrer le montant en : '+ data.current.left"></p>
+            </div>
+        </div>
+        <div id="markdown">
+        </div>
+        <div class="px-5">
+            <div x-show="showInfos" 
+                x-transition
+                x-transition.duration.500ms
+                class="fixed flex justify-center items-center inset-0 bg-gray-500 dark:bg-gray-950 bg-opacity-50 dark:bg-opacity-50 backdrop-blur-sm" x-on:click="showInfos = false" style="display: none;">
+                <div class="p-4 bg-gray-200 dark:bg-gray-800 max-w-sm rounded-md" x-on:click.stop="">
+                    <h3 class="flex mb-4">
+                        <svg class="inline-block w-6 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                        </svg>
+                        <span>Infos</span>
+                    </h3>
+                    <p>Taux: <span x-text="data.rate"  class="font-bold"></span></p>
+                    <p>Dernière mise à jour du taux : <span x-text="data.rate_updated_at" class="font-bold"></span></p>
+                    <hr class="border border-gray-300 my-2">
+                    <template x-if="maj_disponible">
+                        <div class="rounded-md p-3 my-3 dark:bg-green-500 bg-green-800 bg-opacity-90 dark:bg-opacity-40">
+                            <h4 class="text-white text-lg">Nouvelle mise à jour disponible<br>Version <span class="font-bold" x-text="$data.getSettings().app_update.current_version"></span></h4>
+                            <p class="text-gray-300 text-sm mt-3 dark:text-gray-200">Mettez votre application à jour pour profiter des dernières fonctionnalités et corrections de bugs</p>
+                            <div x-on:click="openExternalLink(homePage_url)" class="cursor-pointer inline-block py-2 mt-3 w-full" >
+                                <div class="flex justify-center items-center gap-1 mx-auto max-w-max bg-orange-600 text-gray-100 rounded-md py-2 px-4">
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 animate-pulse">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                        </svg>
+                                    </span> <span>Télécharger Maintenant</span>
+                                </div>
+                            </>
+                        </div>
+                    </template>
+                    <p class="text-sm">
+                        Développé par 
+                        <span class="underline font-bold text-orange-500 cursor-pointer" title="My Facebook Account" x-on:click="openExternalLink('http:/'+'/facebook.com/@cissokocisse')">
+                            Ibrahim Aboubacar Ibrahim
+                        </span>
+                    </p>
+                    <p class="text-center text-xs text-gray-500 mt-4">Le Ciskolateur, version <span x-text="$data.data.appInfos.version + ' released ' + $data.data.appInfos.release_date"></span></p>
+                </div>
+            </div>
+        </div>
+        <!-- </div> -->
+        <div x-show="showRate" 
+            x-transition
+            x-transition.duration.500ms
+            class="fixed flex justify-center items-center inset-0 bg-gray-500 dark:bg-gray-950 bg-opacity-50 dark:bg-opacity-50 backdrop-blur-sm" x-on:click="showRate = false" style="display: none;">
+            <div class="p-4 bg-gray-200 dark:bg-gray-800 max-w-md rounded-md" x-on:click.stop="">
+                <h3 class="flex mb-4_">
+                    <svg class="inline-block w-6 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 7.756a4.5 4.5 0 100 8.488M7.5 10.5h5.25m-5.25 3h5.25M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  <span x-text="$data.data.rate == $data.getSettings().rate.value ? 'Taux actuel' : 'Taux personnalisé'"></span>
+                  <div class="relative ml-auto flex">
+                      <svg x-on:click="gobalInit" 
+                      :class="$data.chargement ? 'animate-spin' : ''"
+                      class="w-6 h-6 ml-auto mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                        <div x-show="$data.chargementRefresh" x-transition x-transition.duration.500ms class="absolute bg-green-500 text-white top-full mt-3 right-4 px-2 py-1 inline-block min-w-max text-xs" style="display: none;">
+                            <span class="bg-green-500_ absolute z-20 bottom-full right-7 h-2_ w-3_ inline-block" style="border-right : 6px solid transparent; border-bottom : 6px solid rgb(34 197 94 / var(--tw-bg-opacity)); border-left : 6px solid transparent;"></span>
+                            Mise à jour effectuée :)
+                        </div>
+                    </svg>
+                  <div class="ml-2 inline-block">
+                    <a :href="'whatsapp:'+'/'+'/'+'send?text='+messageInvitation" target="_blank" rel="noopener noreferrer">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" />
+                          </svg>                          
+                    </a>
+                    </svg>
+                  </div>
+                </h3>
+                <div class="font-bold flex py-5 justify-center items-center gap-6_">
+                    <span class="-ml-16_ inline-block" x-text="data.rate" style="font-size: 7rem;line-height: 7rem;">
+                    </span>
+                    <div class="h-full inline-block transition-all" :class="showCommands ? 'w-16 opacity-1' : 'w-0 opacity-0'">
+                        <span class="h-full flex flex-col justify-center  items-center gap-3" >
+                            <div class="rounded-full bg-gray-500 text-gray-200 p-2" x-on:click.stop="showCommands ? data.incrementRate() : 1+1">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="5" stroke="currentColor" class="w-7 h-w-7">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                                  </svg>
+                            </div>
+                            <div class="rounded-full bg-gray-500 text-gray-200 p-2" x-on:click.stop="showCommands ? data.decrementRate() : 1+1">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="5" stroke="currentColor" class="w-7 h-w-7 flex justify-center items-center">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                  </svg>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+                <p class="text-gray-500 text-center text-xs transition-opacity" :class="$data.data.rate == $data.getSettings().rate.value ? 'opacity-1' : 'opacity-0'">Mis à jour : <span x-text="data.rate_updated_at" class="font-bold"></span></p>
+                <hr class="border border-b-0 border-gray-500 my-5">
+                <div class="flex justify-center items-center gap-4 mt-4_">
+                    <template  x-if="!showCommands">
+                        <div title="Chosir mon taux" x-on:click="showCommands = true" class="rounded-xl border-2 border-gray-800 dark:border-gray-200 text-gray-200 bg-gray-500 dark:bg-transparent flex justify-center items-center py-2 px-3">
+                            Choisir mon taux
+                        </div>
+                    </template >
+                    <template  x-if="showCommands">
+                        <div title="Chosir mon taux" x-on:click="reinitialiserTaux" class="rounded-xl border-2 border-gray-800 dark:border-gray-200 text-gray-200 bg-gray-500 dark:bg-transparent flex justify-center items-center py-2 px-3">
+                            Reinitialier le taux
+                        </div>
+                    </template >
+                    <div title="Continer avec le taux actuel" class="rounded-xl border-2 border-green-800 text-gray-200 bg-green-700 flex justify-center items-center py-2 px-3" x-text="'Continer avec '+data.rate" x-on:click="showRate = false"></button>
+                </div>
+        </div>
+        </div>
+        <!-- <script src="node_modules/marked/marked.min.js">
+        </script> -->
+        <script
+            type="module"
+        >
+        import Alpine from "./node_modules/alpinejs/dist/module.esm.js";
+        window.Alpine = Alpine;
+        Alpine.start();
+        
+    </script>
+    </body>
+</html>
