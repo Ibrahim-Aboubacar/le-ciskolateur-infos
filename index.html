@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <link rel="stylesheet" href="styles.css">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <meta name="description"
         content="Découvre 'Le Ciskolateur', l'appli ultime pour des conversions 💱 faciles entre le Cedi ghanéen et le Franc CFA. Ne te trompe plus dans tes conversions ! Économise du temps et de l'argent🤩. Le taux de change est fourni et régulièrement mis à jour." />
@@ -180,7 +181,7 @@
             </div>
         </nav>
         <!-- Mobile menu, show/hide based on menu open state. -->
-        <div x-show="menuOpen" class="lg:hidden" role="dialog" aria-modal="true">
+        <div style="display: none;" x-show="menuOpen" class="lg:hidden" role="dialog" aria-modal="true">
             <!-- Background backdrop, show/hide based on slide-over state. -->
             <div class="fixed inset-0 z-10"></div>
             <div
@@ -267,7 +268,75 @@
     </header>
     <section>
         <div class="bg-orange-900 py-2 text-center">
-            <p><a href="https://Ibrahim-Aboubacar.github.io/le-ciskolateur-infos/app/Le%20Ciskolateur_1_1.0.0.apk" download class="text-orange-400 underline font-bold">Version 1.0.0</a> est maintenant disponible! <span class="hidden md:inline">Découvrez les nouvelles fonctionnalités et les correctifs à partir d'octobre.</span></p>
+            <p>
+                <a href="https://Ibrahim-Aboubacar.github.io/le-ciskolateur-infos/app/Le%20Ciskolateur_1_1.0.0.apk" download class="text-orange-400 underline font-bold">Version 1.0.0</a> est maintenant disponible! 
+                <span class="hidden md:inline">Découvrez les nouvelles fonctionnalités et les correctifs à partir d'octobre.</span>
+            </p>
+        </div>
+    </section>
+    <section class="bg-gray-900">
+        <div class="flex mx-auto max-w-5xl flex-col md:flex-row text-gray-800_ md:py-24">
+            <div class="w-full md:w-1/2 flex justify-center flex-col items-center py-8">
+                <h2 class="text-center text-4xl">
+                    <span class="font-light">Fini les erreurs de</span> 
+                    <br> conversion <span class="font-bold text-green-500">CFA-GHS</span>
+                    <!-- <br> -->
+                </h2>
+                <p class="text-gray-400 text-sm">
+                    Application gratuite, pour les étudiants étrangers au Ghana.
+                </p>
+                <div class="relative bg-orange-500 rounded-md text-center mt-5 flex" x-data="{otherVersion : false}">
+                    <a class="px-5 py-2" href="https://Ibrahim-Aboubacar.github.io/le-ciskolateur-infos/app/Le%20Ciskolateur_1_1.0.0.apk" download>
+                        <p class="font-semibold">Télécharger pour Android.</p>
+                        <p class="text-xs font-light">Version 1.0.0 APK</p>
+                    </a>
+                    <button class="border-l-2 border-l-gray-800 rounded-r-md inline-block px-5 py-2" title="Afficher les autre platforms" type="button" x-on:click="otherVersion = !otherVersion">
+                        <svg class="h-5 w-5 flex-none text-gray-100 -mb-1 transition duration-500" :class="otherVersion ? 'rotate-90' : ''"
+                            viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="absolute bg-gray-700 shadow-xl rounded-md px-4 py-2 top-full mt-2" x-show="otherVersion" x-transition="" x-transition.duration.500ms>
+                        <a class="hover:bg-green-800/70 hover:shadow-md rounded-md grid grid-cols-5 gap-1" href="https://Ibrahim-Aboubacar.github.io/le-ciskolateur-infos/app/Le%20Ciskolateur_1_1.0.0.apk" download title="Télécharger pour Android." id="android_v1.0.0">
+                            <p class="col-span-3 text-left px-4 py-2">Android</p>
+                            <p class="col-span-1 px-3 py-2">1.0.0</p>
+                            <p class="col-span-1 text-center p-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline-block mx-auto">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                  </svg>                                  
+                            </p>
+                        </a>
+                        <hr class="border-t my-2 border-t-gray-600">
+                        <div class="relative hover:bg-gray-600 hover:shadow-md rounded-md grid grid-cols-5 gap-1" id="IOS_v1.0.0">
+                            <p class="col-span-3 text-left  px-4 py-2">IOS</p>
+                            <p class="col-span-1 px-3 py-2">1.0.0</p>
+                            <a class="col-span-1 text-center p-2" href="#" download title="Télécharger pour IOS.">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline-block mx-auto">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                  </svg>                                  
+                            </a>
+                            <span class="absolute inset-0 cursor-not-allowed" title="La version ISO n'est pas encore disponible">
+                                <span class="absolute top-1/2 right-0 rounded-md shadow-md translate-x-1/2 -translate-y-1/2 bg-red-500 p-2 text-xs">Pas disponible</span>
+                            </span>
+                        </div>
+                        <hr class="border-t my-2 border-t-gray-600">
+                        <a class="hover:bg-green-800/70 hover:shadow-md rounded-md grid grid-cols-5 gap-1" href="#" target="_blank" title="consulter sur le wen." id="web_v1.0.0">
+                            <p class="col-span-3 text-left  px-4 py-2">Web</p>
+                            <p class="col-span-1 px-3 py-2">1.0.0</p>
+                            <p class="col-span-1 text-center p-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline-block mx-auto">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                                  </svg>                                                                   
+                            </p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full md:w-1/2 flex justify-center items-center">
+                <img class="max-w-sm" src="imgs/maquette.png" alt="Maquette de l'application Le Ciskolateur">
+            </div>
         </div>
     </section>
 </body>
