@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<!--     <script src="https://cdn.tailwindcss.com"></script> -->
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <link rel="stylesheet" href="styles.css">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <meta name="description"
         content="Découvre 'Le Ciskolateur', l'appli ultime pour des conversions 💱 faciles entre le Cedi ghanéen et le Franc CFA. Ne te trompe plus dans tes conversions ! Économise du temps et de l'argent🤩. Le taux de change est fourni et régulièrement mis à jour." />
     <title>LE Ciskolateur</title>
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
 
     <meta name="msapplication-TileImage" content="imgs/logo.png" />
     <link rel="icon" href="imgs/logo.png" sizes="32x32" />
@@ -191,7 +191,7 @@
                         <span class="sr-only">Le Ciskolateur</span>
                         <!-- <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                             alt="" /> -->
-                            <p class="inline font-bold text-2xl text-green-700 dark:text-green-500">Le Ciskolateur</p>
+                        <p class="inline font-bold text-2xl text-green-700 dark:text-green-500">Le Ciskolateur</p>
                     </a>
                     <button x-on:click="menuOpen = false" type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
                         <span class="sr-only">Close menu</span>
@@ -206,7 +206,6 @@
                         <div class="space-y-2 py-6">
                             <div class="-mx-3">
                                 <button x-on:click="infos = !infos" type="button"
-                                    
                                     class="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 hover:bg-green-200 dark:hover:bg-green-800"
                                     aria-controls="disclosure-1" aria-expanded="false">
                                     Informations
@@ -215,15 +214,18 @@
       
                         Open: "rotate-180", Closed: ""
                       -->
-                                    <svg :class="infos ? 'rotate-90': ''" class="h-5 w-5 flex-none transition duration-200 " viewBox="0 0 20 20" fill="currentColor"
-                                        aria-hidden="true">
+                                    <svg :class="infos ? 'rotate-90': ''"
+                                        class="h-5 w-5 flex-none transition duration-200 " viewBox="0 0 20 20"
+                                        fill="currentColor" aria-hidden="true">
                                         <path fill-rule="evenodd"
                                             d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
                                             clip-rule="evenodd" />
                                     </svg>
                                 </button>
                                 <!-- 'Product' sub-menu, show/hide based on menu state. -->
-                                <div :style="infos ? 'height: 36rem;' : 'height: 0rem;' " class="mt-2 space-y-2 transition-all duration-200 overflow-y-hidden" id="disclosure-1">
+                                <div :style="infos ? 'height: 36rem;' : 'height: 0rem;' "
+                                    class="mt-2 space-y-2 transition-all duration-200 overflow-y-hidden"
+                                    id="disclosure-1">
                                     <template x-for="info in informations">
                                         <div
                                             class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-green-200 dark:hover:bg-green-800">
@@ -231,8 +233,8 @@
                                                 class="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 dark:bg-gray-600 group-hover:bg-white">
                                                 <svg x-html="info.svg"
                                                     class="h-6 w-6 text-gray-600 dark:text-gray-200 group-hover:text-green-500"
-                                                    fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                    aria-hidden="true">
+                                                    fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                                    stroke="currentColor" aria-hidden="true">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243l-1.59-1.59" />
                                                 </svg>
@@ -244,13 +246,14 @@
                                                     <span class="absolute inset-0"></span>
                                                 </a>
                                                 <p class="mt-1 text-gray-600 dark:text-gray-400" x-text="info.desc">
-                                                    Ne vous trompez plus dans vos conversions ! Économisez du temps et de
+                                                    Ne vous trompez plus dans vos conversions ! Économisez du temps et
+                                                    de
                                                     l'argent🤩.
                                                 </p>
                                             </div>
                                         </div>
                                     </template>
-                               </div>
+                                </div>
                             </div>
                             <a href="#"
                                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-green-200 dark:hover:bg-green-800">Fonctionnalités</a>
@@ -269,16 +272,18 @@
     <section>
         <div class="bg-orange-900 py-2 text-center">
             <p>
-                <a href="https://Ibrahim-Aboubacar.github.io/le-ciskolateur-infos/app/Le%20Ciskolateur_1_1.0.0.apk" download class="text-orange-400 underline font-bold">Version 1.0.0</a> est maintenant disponible! 
-                <span class="hidden md:inline">Découvrez les nouvelles fonctionnalités et les correctifs à partir d'octobre.</span>
+                <a href="https://Ibrahim-Aboubacar.github.io/le-ciskolateur-infos/app/Le%20Ciskolateur_1_1.1.0.apk"
+                    download class="text-orange-400 underline font-bold">Version 1.1.0</a> est maintenant disponible!
+                <span class="hidden md:inline">Découvrez les nouvelles fonctionnalités et les correctifs à partir du 07
+                    octobre.</span>
             </p>
         </div>
     </section>
     <section class="bg-gray-900">
         <div class="flex mx-auto max-w-5xl flex-col md:flex-row text-gray-800_ md:py-24">
-            <div class="w-full md:w-1/2 flex justify-center flex-col items-center py-8">
+            <div class="w-full md:w-1/2 flex justify-center flex-col items-center pt-28 pb-14 md:pt-0 md:pb-0">
                 <h2 class="text-center text-4xl">
-                    <span class="font-light">Fini les erreurs de</span> 
+                    <span class="font-light">Fini les erreurs de</span>
                     <br> conversion <span class="font-bold text-green-500">CFA-GHS</span>
                     <!-- <br> -->
                 </h2>
@@ -286,55 +291,74 @@
                     Application gratuite, pour les étudiants étrangers au Ghana.
                 </p>
                 <div class="relative bg-orange-500 rounded-md text-center mt-5 flex" x-data="{otherVersion : false}">
-                    <a class="px-5 py-2" href="https://Ibrahim-Aboubacar.github.io/le-ciskolateur-infos/app/Le%20Ciskolateur_1_1.0.0.apk" download>
+                    <a class="px-5 py-2"
+                        href="https://Ibrahim-Aboubacar.github.io/le-ciskolateur-infos/app/Le%20Ciskolateur_1_1.0.0.apk"
+                        download>
                         <p class="font-semibold">Télécharger pour Android.</p>
-                        <p class="text-xs font-light">Version 1.0.0 APK</p>
+                        <p class="text-xs font-light">Version 1.1.0 APK</p>
                     </a>
-                    <button class="border-l-2 border-l-gray-800 rounded-r-md inline-block px-5 py-2" title="Afficher les autre platforms" type="button" x-on:click="otherVersion = !otherVersion">
-                        <svg class="h-5 w-5 flex-none text-gray-100 -mb-1 transition duration-500" :class="otherVersion ? 'rotate-90' : ''"
-                            viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <button class="border-l-2 border-l-gray-800 rounded-r-md inline-block px-5 py-2"
+                        title="Afficher les autre platforms" type="button" x-on:click="otherVersion = !otherVersion">
+                        <svg class="h-5 w-5 flex-none text-gray-100 -mb-1 transition duration-500"
+                            :class="otherVersion ? 'rotate-90' : ''" viewBox="0 0 20 20" fill="currentColor"
+                            aria-hidden="true">
                             <path fill-rule="evenodd"
                                 d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
                                 clip-rule="evenodd" />
                         </svg>
                     </button>
-                    <div class="absolute bg-gray-700 shadow-xl rounded-md px-4 py-2 top-full mt-2" x-show="otherVersion" x-transition="" x-transition.duration.500ms>
-                        <a class="hover:bg-green-800/70 hover:shadow-md rounded-md grid grid-cols-5 gap-1" href="https://Ibrahim-Aboubacar.github.io/le-ciskolateur-infos/app/Le%20Ciskolateur_1_1.0.0.apk" download title="Télécharger pour Android." id="android_v1.0.0">
+                    <div class="absolute bg-gray-700 shadow-xl rounded-md px-4 py-2 top-full mt-2" x-show="otherVersion"
+                        x-transition="" x-transition.duration.500ms>
+                        <a class="hover:bg-green-800/70 hover:shadow-md rounded-md grid grid-cols-5 gap-1"
+                            href="https://Ibrahim-Aboubacar.github.io/le-ciskolateur-infos/app/Le%20Ciskolateur_1_1.0.0.apk"
+                            download title="Télécharger pour Android." id="android_v1.0.0">
                             <p class="col-span-3 text-left px-4 py-2">Android</p>
-                            <p class="col-span-1 px-3 py-2">1.0.0</p>
+                            <p class="col-span-1 px-3 py-2">1.1.0</p>
                             <p class="col-span-1 text-center p-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline-block mx-auto">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                                  </svg>                                  
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline-block mx-auto">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                </svg>
                             </p>
                         </a>
                         <hr class="border-t my-2 border-t-gray-600">
-                        <div class="relative hover:bg-gray-600 hover:shadow-md rounded-md grid grid-cols-5 gap-1" id="IOS_v1.0.0">
+                        <div class="relative hover:bg-gray-600 hover:shadow-md rounded-md grid grid-cols-5 gap-1"
+                            id="IOS_v1.0.0">
                             <p class="col-span-3 text-left  px-4 py-2">IOS</p>
                             <p class="col-span-1 px-3 py-2">1.0.0</p>
                             <a class="col-span-1 text-center p-2" href="#" download title="Télécharger pour IOS.">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline-block mx-auto">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                                  </svg>                                  
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline-block mx-auto">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                </svg>
                             </a>
-                            <span class="absolute inset-0 cursor-not-allowed" title="La version ISO n'est pas encore disponible">
-                                <span class="absolute top-1/2 right-0 rounded-md shadow-md translate-x-1/2 -translate-y-1/2 bg-red-500 p-2 text-xs">Pas disponible</span>
+                            <span class="absolute inset-0 cursor-not-allowed"
+                                title="La version ISO n'est pas encore disponible">
+                                <span
+                                    class="absolute top-1/2 right-0 rounded-md shadow-md translate-x-1/2 -translate-y-1/2 bg-red-500 p-2 text-xs">Pas
+                                    disponible</span>
                             </span>
                         </div>
                         <hr class="border-t my-2 border-t-gray-600">
-                        <a class="hover:bg-green-800/70 hover:shadow-md rounded-md grid grid-cols-5 gap-1" href="https://Ibrahim-Aboubacar.github.io/le-ciskolateur-infos/app/" target="_blank" title="consulter sur le web." id="web_v1.0.0">
+                        <a class="hover:bg-green-800/70 hover:shadow-md rounded-md grid grid-cols-5 gap-1"
+                            href="https://Ibrahim-Aboubacar.github.io/le-ciskolateur-infos/app/" target="_blank"
+                            rel="noopener" title="consulter sur le web." id="web_v1.0.0">
                             <p class="col-span-3 text-left  px-4 py-2">Web</p>
-                            <p class="col-span-1 px-3 py-2">1.0.0</p>
+                            <p class="col-span-1 px-3 py-2">1.1.0</p>
                             <p class="col-span-1 text-center p-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline-block mx-auto">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-                                  </svg>                                                                   
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline-block mx-auto">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                                </svg>
                             </p>
                         </a>
                     </div>
                 </div>
             </div>
-            <div class="w-full md:w-1/2 flex justify-center items-center">
+            <div class="w-full md:w-1/2 flex justify-center items-center py-16">
                 <img class="max-w-sm" src="imgs/maquette.png" alt="Maquette de l'application Le Ciskolateur">
             </div>
         </div>
