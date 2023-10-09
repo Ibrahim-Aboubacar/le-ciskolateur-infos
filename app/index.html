@@ -130,14 +130,12 @@
                         if(($data.data.start+'')[0] == '0') $data.data.start = $data.data.start * 1
                     }
                     if(($data.data.start + '').includes('e') || ($data.data.start + '').includes('nity')){
-                        console.log($data.data.start);
                         $data.data.start = 0;
                         return
                     }
                     $data.data.updateStartShow()
                 },
                 updateStartShow : function () {
-                    console.log($data.data.start + '')
                     if(($data.data.start + '').includes('.')){
                         //let expression = ($data.data.start + '')[($data.data.start + '').length]
                         if(($data.data.start + '')[($data.data.start + '').length -1] == '.'){
@@ -168,8 +166,6 @@
                     } else {
                         result = nbr[0].toLocaleString('fr-FR')
                     }
-                    console.log(nbr)
-                    console.log(result)
                     $data.data.startShow = result;
                 },
                 effacer : function (){
@@ -195,7 +191,6 @@
                     }
                     resulto != $data.data.result ? $data.vibrateMd() : $data.vibrateSm();
                     if(($data.data.start + '').includes('e') || ($data.data.start + '').includes('nity')){
-                        console.log($data.data.start);
                         $data.data.start = 0;
                         return
                     }
@@ -238,8 +233,7 @@
                                     // Code à exécuter lorsque la notification est fermée
                                 };
                             } else {
-                                // L'utilisateur a refusé la permission
-                                console.log('L\'utilisateur a refusé la permission de notifications.');
+                                // L'utilisateur a refusé la permission de notifications
                             }
                         })
                         .catch(error => {
@@ -295,9 +289,9 @@
                         if (!response.ok) {
                             return response;
                             throw new Error(`Erreur HTTP! Statut: ${response.status}`);
-                        } //console.log(response);
-                        //return response.text(); // Si vous attendez une réponse JSON
-                        return response.json(); // Si vous attendez une réponse JSON
+                        } 
+                        //return response.text(); 
+                        return response.json();
                     })
                     .then(data => {
                         $data.setUniqueDeviceID(data.uuid)
@@ -359,7 +353,6 @@
                 return (mess.replace(/\n/g, '%0A')).replace(/ /g, '%20')
             },
             checkMaj : function (){
-                //console.log('Recherche de mise à jour...')
                 if($data.getSettings().app_update.current_version != $data.data.appInfos.version){
                     //$data.maj_disponible = true;
                     console.log('Mise à jour disponible v'+$data.getSettings().app_update.current_version+' …')
