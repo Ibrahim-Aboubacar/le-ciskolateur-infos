@@ -33,6 +33,13 @@
                 -moz-appearance: textfield;
             }
         </style>
+        <style>
+            html, body {
+                touch-action: manipulation;
+                /* La propriété touch-action indique au navigateur comment gérer les gestes tactiles, y compris le zoom. "manipulation" désactive le zoom. */
+                user-scalable: no; /* Cette propriété peut également être utilisée pour désactiver le zoom sur certains éléments spécifiques si nécessaire. */
+            }
+        </style>
         <title>Le Ciskolateur</title>
     </head>
     <body x-data="{
