@@ -1,7 +1,7 @@
 {
   "rate": {
-    "value": 217,
-      "updated_at": "3 Avril à 11:45",
+    "value": 215,
+      "updated_at": "3 Avril à 15:50",
       "rateCountStart": 100,
       "userActivityServer" : "https://slim-app.test/user-activity.php",
       "agentNumber": "+233544621369"
