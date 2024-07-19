@@ -7,7 +7,7 @@
       "agentNumber": "+233544621369"
   },
   "app_update": {
-    "current_version": "1.1.0",
+    "current_version": "1.1.1",
       "updated_at": "02/12/2023", 
       "desc": "/1.2.0/description.md"
   }
