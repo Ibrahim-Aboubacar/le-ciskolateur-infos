@@ -1,6 +1,6 @@
 {
   "rate": {
-    "value": 253,
+    "value": 245,
       "updated_at": "20 DÉCEMBRE 2024 À 20:00:00",
       "rateCountStart": 100,
       "userActivityServer" : "https://slim-app.test/user-activity.php",
