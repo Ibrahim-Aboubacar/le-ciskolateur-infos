@@ -4,7 +4,7 @@
       "updated_at": "15 Mars 2025 À 21:30:00",
       "rateCountStart": 100,
       "userActivityServer" : "https://slim-app.test/user-activity.php",
-      "agentNumber": "+233544621369"
+      "agentNumber": "+233544621369 test"
   },
   "app_update": {
     "current_version": "1.1.1",
