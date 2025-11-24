@@ -1,1 +1,1 @@
-{"rate": {"value": 212,"updated_at": "22 novembre 2025 @ 18:30:04","rateCountStart": 131,"userActivityServer" : "https://slim-app.test/user-activity.php","agentNumber": "+233544621369"},"app_update": {"current_version": "1.1.1","updated_at": "19/07/2024", "desc": "/1.1.1/description.md"}}
+{"rate": {"value": 211,"updated_at": "24 novembre 2025 @ 13:40:03","rateCountStart": 143,"userActivityServer" : "https://slim-app.test/user-activity.php","agentNumber": "+233544621369"},"app_update": {"current_version": "1.1.1","updated_at": "19/07/2024", "desc": "/1.1.1/description.md"}}
