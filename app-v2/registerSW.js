@@ -1,1 +1,1 @@
-if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/sw.js', { scope: '/' })})}
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('https://ibrahim-aboubacar.github.io/le-ciskolateur-infos/app-v2/sw.js', { scope: 'https://ibrahim-aboubacar.github.io/le-ciskolateur-infos/app-v2/' })})}
